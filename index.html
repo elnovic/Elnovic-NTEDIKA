@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>Elnovic Ntedika</title>
+<meta name="description" content="Elnovic Ntedika Tsoni-Malonda, AI Engineer & Technology Builder à Casablanca. Agents autonomes, applications LLM, machine learning et IoT.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400..800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: institutional, in the manner of a learned-society site: navy utility bar, white header,
+   blue hero band, alternating white and grey sections, cards topped with a blue rule.
+   Each project still shows its real processing chain (source → model → interface). */
+:root{
+  --bg:#FFFFFF; --surface:#F1F4F7; --card:#FFFFFF; --ink:#17252F; --muted:#56687A; --line:#D5DCE3;
+  --accent:#00629B; --accent-ink:#FFFFFF; --signal:#B45309;
+  --navy:#00304F; --navy-2:#00629B; --navy-deep:#001F33; --navy-ink:#00263E;
+  --on-navy:#FFFFFF; --on-navy-muted:#B9D3E3; --gold:#FFA300;
+  --display:"Source Sans 3","Segoe UI",Arial,sans-serif;
+  --body:"Source Sans 3","Segoe UI",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --gutter:clamp(16px,4vw,40px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B1620; --surface:#101E2A; --card:#162736; --ink:#E7EEF4; --muted:#9BACBB; --line:#27394A;
+    --accent:#56B6EA; --accent-ink:#04202F; --signal:#FFB04D;
+    --navy:#072A42; --navy-2:#0B4A73; --navy-deep:#050F17; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B1620; --surface:#101E2A; --card:#162736; --ink:#E7EEF4; --muted:#9BACBB; --line:#27394A;
+  --accent:#56B6EA; --accent-ink:#04202F; --signal:#FFB04D;
+  --navy:#072A42; --navy-2:#0B4A73; --navy-deep:#050F17; color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{margin:0}
+img{max-width:100%}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+p{margin:0}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.14;letter-spacing:-0.01em}
+ul,ol,dl,dd{margin:0;padding:0;list-style:none}
+
+/* language switch */
+:root[data-lang="en"] .fr, :root:not([data-lang="en"]) .en{display:none}
+
+.wrap{max-width:1120px;margin-inline:auto;padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px))}
+.mono{font-family:var(--mono);font-size:.8125rem;letter-spacing:.01em}
+.label{font-family:var(--mono);font-size:.75rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:24px;min-height:56px}
+.brand{font-family:var(--display);font-weight:700;font-size:1.1875rem;color:var(--accent);text-decoration:none;letter-spacing:-0.01em}
+.brand i{font-style:normal;color:var(--gold)}
+.nav{display:flex;gap:22px;margin-left:auto;font-size:.9375rem}
+.nav a{text-decoration:none;color:var(--ink);font-weight:600;transition:color .15s}
+.nav a:hover{color:var(--accent)}
+.lang{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;background:none;color:var(--ink);border:1px solid var(--line);padding:6px 10px;border-radius:3px;cursor:pointer;transition:border-color .15s}
+.lang:hover{border-color:var(--ink)}
+@media (max-width:940px){.nav{display:none}.lang{margin-left:auto}}
+
+/* utility bar */
+.util{background:var(--navy-deep);color:var(--on-navy-muted);font-size:.8125rem}
+.util .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 20px;min-height:34px;padding-block:6px}
+.util nav{display:flex;gap:18px}
+.util a{color:var(--on-navy);text-decoration:none}
+.util a:hover{text-decoration:underline}
+
+/* hero */
+.hero{background:linear-gradient(115deg,var(--navy) 0%,var(--navy) 42%,var(--navy-2) 100%);color:var(--on-navy)}
+.hero .label{color:var(--gold)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:end;padding-block:clamp(40px,7vw,88px) clamp(40px,6vw,72px)}
+.hero h1{font-size:clamp(2.5rem,7vw,4.75rem);font-weight:700;letter-spacing:-0.02em;line-height:1;margin-top:16px}
+.hero h1 small{display:block;font-size:.3em;font-weight:500;letter-spacing:0;color:var(--on-navy-muted);margin-top:.5em;line-height:1.2}
+.lede{font-size:clamp(1.125rem,2vw,1.375rem);line-height:1.45;max-width:34em;margin-top:26px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.9375rem;text-decoration:none;padding:12px 18px;border-radius:3px;border:1px solid var(--ink);transition:background .15s,color .15s,border-color .15s}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn:not(.primary):hover{background:var(--ink);color:var(--bg)}
+.hero .btn{border-color:var(--on-navy);color:var(--on-navy)}
+.hero .btn:not(.primary):hover{background:var(--on-navy);color:var(--navy-ink)}
+.hero .btn.primary{background:var(--gold);border-color:var(--gold);color:var(--navy-ink)}
+.hero .btn.primary:hover{background:var(--on-navy);border-color:var(--on-navy);color:var(--navy-ink)}
+.facts{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:34px;color:var(--on-navy-muted)}
+.facts b{color:var(--on-navy);font-weight:500}
+.portrait{position:relative;justify-self:end;width:100%;max-width:380px}
+.portrait::before{content:"";position:absolute;inset:18px -14px -14px 18px;background:var(--gold)}
+.portrait img{position:relative;display:block;width:100%;aspect-ratio:1;object-fit:cover}
+.portrait figcaption{position:relative;margin-top:26px;color:var(--on-navy-muted)}
+figure{margin:0}
+@media (max-width:760px){
+  .hero .wrap{grid-template-columns:minmax(0,1fr)}
+  .portrait{justify-self:start;max-width:260px;order:-1;margin-right:14px}
+  .portrait figcaption{display:none}
+}
+
+/* sections */
+section{scroll-margin-top:72px}
+.sec{border-top:1px solid var(--line)}
+.sec.alt{background:var(--surface)}
+.sec>.wrap{padding-block:clamp(48px,7vw,88px)}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;margin-bottom:clamp(28px,4vw,48px)}
+.sec-head h2{font-size:clamp(1.75rem,4vw,2.5rem);font-weight:700;color:var(--accent)}
+.sec-head h2::after{content:"";display:block;width:56px;height:4px;background:var(--gold);margin-top:12px}
+
+/* profile */
+.about{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(28px,5vw,72px)}
+.about .text{display:grid;gap:18px;max-width:38em}
+.about .text p:first-child{font-family:var(--display);font-size:clamp(1.25rem,2.4vw,1.625rem);line-height:1.3;letter-spacing:-0.01em}
+.domains{display:grid;gap:0}
+.domains li{padding:14px 0;border-top:1px solid var(--line);display:grid;gap:2px}
+.domains li:last-child{border-bottom:1px solid var(--line)}
+.domains strong{font-family:var(--display);font-weight:600;font-size:1.0625rem}
+.domains span.d{color:var(--muted);font-size:.9375rem;line-height:1.45}
+@media (max-width:760px){.about{grid-template-columns:minmax(0,1fr)}}
+
+/* projects */
+.projects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.project{display:grid;gap:14px;align-content:start;min-width:0;background:var(--card);border:1px solid var(--line);border-top:4px solid var(--accent);padding:20px 22px 24px}
+.project header{display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+.project h3{font-size:1.5rem;font-weight:700}
+.project h3 a{text-decoration:none;color:var(--accent)}
+.project h3 a:hover{text-decoration:underline}
+.project .yr{color:var(--muted);white-space:nowrap}
+.project p{color:var(--muted);font-size:1rem;line-height:1.55}
+.pipe{display:flex;flex-wrap:wrap;gap:8px 0;background:var(--surface);padding:14px 16px;font-family:var(--mono);font-size:.78rem;line-height:1.4}
+.pipe li{display:inline-flex;align-items:center}
+.pipe li:not(:last-child)::after{content:"→";color:var(--accent);margin:0 9px;font-weight:500}
+.pipe li.loop::after{content:"⇄"}
+.tech{color:var(--signal);font-family:var(--mono);font-size:.75rem;line-height:1.6}
+@media (max-width:760px){.projects{grid-template-columns:minmax(0,1fr)}}
+
+/* deployed apps */
+.apps-title{font-size:1.375rem;font-weight:700;margin:clamp(48px,6vw,72px) 0 6px}
+.apps-note{color:var(--muted);margin-bottom:18px;font-size:.9375rem}
+.apps li{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr) auto;gap:6px 24px;padding:13px 0;border-top:1px solid var(--line);align-items:baseline}
+.apps li:last-child{border-bottom:1px solid var(--line)}
+.apps strong{font-weight:600}
+.apps .what{color:var(--muted);font-size:.9375rem}
+.apps .stack{font-family:var(--mono);font-size:.75rem;color:var(--signal);text-align:right}
+@media (max-width:760px){.apps li{grid-template-columns:minmax(0,1fr)}.apps .stack{text-align:left}}
+
+/* timeline */
+.timeline>li{display:grid;grid-template-columns:11.5rem minmax(0,1fr);gap:8px 32px;padding:24px 0;border-top:1px solid var(--line)}
+.timeline>li:last-child{border-bottom:1px solid var(--line)}
+.when{color:var(--muted);padding-top:5px}
+.role h3{font-size:1.3125rem;font-weight:700;line-height:1.2}
+.role h3 em{font-style:normal;color:var(--accent)}
+.role .meta{color:var(--muted);font-size:.9375rem;margin-top:3px}
+.role .sum{margin-top:12px;max-width:42em}
+.role ul{margin-top:10px;display:grid;gap:6px;max-width:42em;color:var(--muted);font-size:.9688rem}
+.role ul li{padding-left:18px;position:relative}
+.role ul li::before{content:"";position:absolute;left:0;top:.72em;width:8px;height:1px;background:var(--accent)}
+@media (max-width:760px){.timeline>li{grid-template-columns:minmax(0,1fr)}.when{padding-top:0}}
+
+/* events */
+.events{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.event{background:var(--card);border:1px solid var(--line);min-width:0;display:flex;flex-direction:column}
+.event .band{background:var(--accent);color:var(--accent-ink);padding:11px 22px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;font-weight:600;font-size:.875rem;letter-spacing:.04em;text-transform:uppercase}
+.event .body{padding:22px;display:grid;gap:14px;align-content:start}
+.event h3{font-size:1.375rem;font-weight:700;line-height:1.2}
+.event p{color:var(--muted);font-size:1rem;line-height:1.55}
+.event dl div{display:grid;grid-template-columns:7rem minmax(0,1fr);gap:4px 16px;padding:10px 0;border-top:1px solid var(--line);font-size:.9375rem;line-height:1.45}
+.event dt{color:var(--muted);font-weight:600}
+.events-note{margin-top:22px;color:var(--muted);font-size:.9375rem}
+@media (max-width:760px){.events{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:480px){.event dl div{grid-template-columns:minmax(0,1fr)}}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(28px,5vw,64px)}
+.skills div{display:grid;grid-template-columns:9.5rem minmax(0,1fr);gap:4px 20px;padding:14px 0;border-top:1px solid var(--line);align-items:baseline}
+.skills dt{font-family:var(--mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.skills dd{font-size:.9688rem;line-height:1.5}
+@media (max-width:860px){.skills{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:480px){.skills div{grid-template-columns:minmax(0,1fr)}}
+
+/* certifications */
+.certs{columns:3 300px;column-gap:clamp(28px,4vw,56px)}
+.certs li{break-inside:avoid;display:grid;grid-template-columns:4.4rem minmax(0,1fr);gap:0 12px;padding:10px 0;border-top:1px solid var(--line);align-items:baseline}
+.certs time{font-family:var(--mono);font-size:.75rem;color:var(--signal);font-variant-numeric:tabular-nums}
+.certs .n{font-size:.9375rem;line-height:1.35;font-weight:600}
+.certs a.n{color:var(--accent);text-decoration:none}
+.certs a.n:hover{text-decoration:underline}
+.certs a.n::after{content:" ↗";font-weight:400}
+.certs span.o{grid-column:2;color:var(--muted);font-size:.8125rem}
+
+/* contact */
+.contact{background:linear-gradient(115deg,var(--navy) 0%,var(--navy) 42%,var(--navy-2) 100%);color:var(--on-navy)}
+.contact .wrap{padding-block:clamp(56px,8vw,104px);display:grid;gap:28px}
+.contact .label{color:var(--gold)}
+.contact h2{font-size:clamp(2rem,5vw,3.25rem);font-weight:700;letter-spacing:-0.015em;line-height:1.1;max-width:16em}
+.mailrow{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px}
+.mail{font-family:var(--mono);font-size:clamp(1rem,2.6vw,1.375rem);user-select:all;overflow-wrap:anywhere;min-width:0}
+.copy{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;background:none;color:inherit;border:1px solid currentColor;padding:8px 12px;border-radius:3px;cursor:pointer;transition:background .15s,color .15s}
+.copy:hover{background:var(--on-navy);color:var(--navy-ink)}
+.contact .btn{border-color:currentColor}
+.contact .btn:not(.primary):hover{background:var(--on-navy);color:var(--navy-ink)}
+.contact .where{color:var(--on-navy-muted)}
+footer .wrap{padding-block:22px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;color:var(--muted)}
+
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="util">
+  <div class="wrap">
+    <span>AI Engineer &amp; Technology Builder · Casablanca</span>
+    <nav aria-label="Profils">
+      <a href="https://github.com/elnovic" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/elnovic-ntedika/" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+  </div>
+</div>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#accueil">Elnovic Ntedika<i>.</i></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#profil"><span class="fr">Profil</span><span class="en">Profile</span></a>
+      <a href="#projets"><span class="fr">Projets</span><span class="en">Projects</span></a>
+      <a href="#parcours"><span class="fr">Parcours</span><span class="en">Experience</span></a>
+      <a href="#evenements"><span class="fr">Événements</span><span class="en">Events</span></a>
+      <a href="#competences"><span class="fr">Compétences</span><span class="en">Skills</span></a>
+      <a href="#certifications">Certifications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="lang" id="lang-toggle" type="button" aria-label="Switch language / Changer de langue">EN</button>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="accueil">
+  <div class="wrap">
+    <div>
+      <p class="label">AI Engineer &amp; Technology Builder</p>
+      <h1>Elnovic Ntedika<small>Tsoni-Malonda</small></h1>
+      <p class="lede">
+        <span class="fr">Je conçois des systèmes intelligents, des agents autonomes et des solutions pilotées par la donnée, de l'idée jusqu'à l'application qui tourne.</span>
+        <span class="en">I build intelligent systems, autonomous agents and data-driven solutions, from the first idea to a working application.</span>
+      </p>
+      <div class="cta">
+        <a class="btn primary" href="#projets"><span class="fr">Voir mes projets</span><span class="en">See my projects</span></a>
+        <a class="btn" href="https://github.com/elnovic" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/elnovic-ntedika/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <ul class="facts mono">
+        <li><b>Freelance</b> <span class="fr">IA &amp; Data</span><span class="en">AI &amp; Data</span></li>
+        <li><span class="fr"><b>Fondateur</b>, NOVI Ecosystem</span><span class="en"><b>Founder</b>, NOVI Ecosystem</span></li>
+        <li><b>Casablanca</b>, <span class="fr">Maroc</span><span class="en">Morocco</span></li>
+      </ul>
+    </div>
+    <figure class="portrait">
+      <img src="portrait.jpg" width="720" height="720" alt="Portrait d'Elnovic Ntedika, en costume noir et lunettes">
+      <figcaption class="mono">Sidi Marouf, Casablanca</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec" id="profil">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><span class="fr">Profil</span><span class="en">Profile</span></h2>
+      <p class="label"><span class="fr">De l'idée à la solution</span><span class="en">From idea to working solution</span></p>
+    </div>
+    <div class="about">
+      <div class="text">
+        <p>
+          <span class="fr">Ingénieur IA, je conçois, développe et intègre des systèmes intelligents qui répondent à des problèmes concrets.</span>
+          <span class="en">I am an AI Engineer who designs, develops and integrates intelligent systems that solve practical problems.</span>
+        </p>
+        <p>
+          <span class="fr">J'associe analyse de données, machine learning, développement logiciel et techniques d'IA modernes pour passer d'une idée à une solution fonctionnelle. Mes projets full-stack couvrent le NLP, la vision par ordinateur, les systèmes multi-agents et l'IoT.</span>
+          <span class="en">I combine data analysis, machine learning, software development and modern AI techniques to move from an idea to a working solution. My full-stack projects span NLP, computer vision, multi-agent systems and IoT.</span>
+        </p>
+        <p>
+          <span class="fr">Ce qui me motive : transformer les technologies émergentes en solutions utiles, à impact social, et livrer des applications IA prêtes pour la production.</span>
+          <span class="en">What drives me: turning emerging technologies into practical, socially impactful solutions and delivering production-ready AI applications.</span>
+        </p>
+        <p class="mono" style="color:var(--muted)">
+          <span class="fr">Français (langue maternelle) · Anglais · Lingala et Swahili (intermédiaire)</span>
+          <span class="en">French (native) · English · Lingala &amp; Swahili (intermediate)</span>
+        </p>
+      </div>
+      <ul class="domains">
+        <li><strong>AI Engineering</strong><span class="d"><span class="fr">Applications LLM, intégration d'IA, logiciels intelligents.</span><span class="en">LLM-powered applications, AI integration, intelligent software.</span></span></li>
+        <li><strong>Agentic AI</strong><span class="d"><span class="fr">Workflows autonomes et multi-agents, exécution d'outils, orchestration.</span><span class="en">Autonomous and multi-agent workflows, tool execution, orchestration.</span></span></li>
+        <li><strong>Machine Learning &amp; Data Science</strong><span class="d"><span class="fr">Préparation des données, analyse exploratoire, modélisation prédictive, évaluation.</span><span class="en">Data preparation, exploratory analysis, predictive modelling, evaluation.</span></span></li>
+        <li><strong><span class="fr">IA appliquée</span><span class="en">Applied AI</span></strong><span class="d"><span class="fr">Prototypes et produits pour l'éducation, la recherche, l'architecture, la musique et l'aide à la décision.</span><span class="en">Prototypes and products for education, research, architecture, music and decision support.</span></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="projets">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><span class="fr">Projets</span><span class="en">Projects</span></h2>
+      <p class="label"><span class="fr">Chaque projet avec sa chaîne de traitement</span><span class="en">Each project with its processing chain</span></p>
+    </div>
+
+    <div class="projects">
+      <article class="project">
+        <header><h3><a href="https://github.com/elnovic/AI-Tech-Watch-Agent" target="_blank" rel="noopener">AI Tech Watch Agent</a></h3><span class="yr mono">2026</span></header>
+        <p>
+          <span class="fr">Agent de veille qui interroge arXiv et Semantic Scholar, repère les articles récents les plus pertinents et en produit des résumés structurés. Les réponses de l'agent sont suivies avec Arize AI.</span>
+          <span class="en">A research-monitoring agent that queries arXiv and Semantic Scholar, picks out the most relevant recent papers and writes structured summaries. Agent responses are monitored with Arize AI.</span>
+        </p>
+        <ol class="pipe"><li>arXiv + Semantic Scholar</li><li><span class="fr">Résumés LLM</span><span class="en">LLM summaries</span></li><li>REST API</li><li>Streamlit UI</li></ol>
+        <p class="tech">FastAPI · PostgreSQL · Redis · Streamlit · Docker · Arize AI · OpenAI API</p>
+      </article>
+
+      <article class="project">
+        <header><h3>DataPilot AI</h3><span class="yr mono">2026</span></header>
+        <p>
+          <span class="fr">Plateforme full-stack d'analyse de fichiers CSV, conçue de zéro : ingestion, nettoyage, exploration, visualisation, puis modèles de régression pour tirer des enseignements des données importées.</span>
+          <span class="en">A full-stack CSV analysis platform built from scratch: ingestion, cleaning, exploration, visualization, then regression models that draw insights from uploaded datasets.</span>
+        </p>
+        <ol class="pipe"><li>Import</li><li>Overview</li><li>Clean</li><li>Explore</li><li>Visualize</li><li>ML</li></ol>
+        <p class="tech">React · TypeScript · TailwindCSS · shadcn/ui · Recharts · Python · scikit-learn</p>
+      </article>
+
+      <article class="project">
+        <header><h3><a href="https://github.com/elnovic/-ia-dj-agent" target="_blank" rel="noopener">Autonomous AI DJ Agent</a></h3><span class="yr mono">2026</span></header>
+        <p>
+          <span class="fr">Système multi-agents pour une expérience musicale interactive : trois agents spécialisés analysent le contexte, assurent la cohérence de la lecture et s'adaptent aux retours en temps réel. Prototype fonctionnel avec crossfade intelligent, exécuté en local.</span>
+          <span class="en">A multi-agent system for interactive music: three specialized agents analyze context, keep playback coherent and adapt to feedback in real time. Working prototype with intelligent crossfading, running locally.</span>
+        </p>
+        <ol class="pipe"><li class="loop">Music Curator</li><li class="loop">Player &amp; Mixer</li><li>User Interaction</li></ol>
+        <p class="tech">Python · SoundDevice · PyDub · Streamlit · FMA Dataset</p>
+      </article>
+
+      <article class="project">
+        <header><h3><a href="https://github.com/elnovic/plan2d-3d-optim" target="_blank" rel="noopener">2D→3D Floor Plan Optimizer</a></h3><span class="yr mono">2026</span></header>
+        <p>
+          <span class="fr">Assistant qui analyse des plans d'architecture : extraction des données spatiales depuis un plan 2D, puis recommandations d'aménagement et d'emplacement des prises électriques, avec une visualisation 3D simple.</span>
+          <span class="en">An assistant that analyzes floor plans: it extracts spatial data from a 2D plan, then recommends layout and electrical outlet placement, with a basic 3D view.</span>
+        </p>
+        <ol class="pipe"><li><span class="fr">Plan 2D</span><span class="en">2D plan</span></li><li>Structify</li><li>NVIDIA LLM</li><li>JSON + Three.js 3D</li></ol>
+        <p class="tech">Structify · NVIDIA LLM · Google Colab · Streamlit · Three.js</p>
+      </article>
+
+      <article class="project">
+        <header><h3>HydroGuard 360</h3><span class="yr mono"><span class="fr">2025 – auj.</span><span class="en">2025 – now</span></span></header>
+        <p>
+          <span class="fr">Système IoT de gestion de l'eau : suivi de la qualité en temps réel, détection de fuites et alertes automatiques. Il reste autonome en local si la connexion tombe et ses seuils sont configurables.</span>
+          <span class="en">An IoT water-management system: real-time quality monitoring, leak detection and automated alerts. It keeps working locally when the connection drops, with configurable thresholds.</span>
+        </p>
+        <ol class="pipe"><li><span class="fr">Capteurs</span><span class="en">Sensors</span></li><li>Arduino</li><li><span class="fr">Passerelle</span><span class="en">Gateway</span></li><li>Cloud</li><li><span class="fr">Alertes</span><span class="en">Alerts</span></li></ol>
+        <p class="tech">Arduino · Python · IoT Sensors · Cloud Platform · Data Pipeline Design</p>
+      </article>
+
+      <article class="project">
+        <header><h3>Predictions of Future Jobs</h3><span class="yr mono"><span class="fr">mai – juil. 2025</span><span class="en">May – Jul 2025</span></span></header>
+        <p>
+          <span class="fr">Projet de recherche universitaire qui anticipe les métiers émergents en Afrique à partir de milliers d'offres d'emploi LinkedIn, avec des tableaux de bord par secteur et dans le temps.</span>
+          <span class="en">A university research project anticipating emerging jobs across Africa from thousands of LinkedIn postings, with dashboards by sector and over time.</span>
+        </p>
+        <ol class="pipe"><li><span class="fr">Offres LinkedIn</span><span class="en">LinkedIn postings</span></li><li>TF-IDF + clustering</li><li>Random Forest · Prophet</li><li>Dashboards</li></ol>
+        <p class="tech">Python · scikit-learn · Pandas · Prophet · Data Visualization</p>
+      </article>
+    </div>
+
+    <h3 class="apps-title"><span class="fr">Applications de machine learning déployées</span><span class="en">Deployed machine learning applications</span></h3>
+    <p class="apps-note"><span class="fr">Sept applications interactives, du modèle jusqu'à l'interface.</span><span class="en">Seven interactive apps, from the model to the interface.</span></p>
+    <ul class="apps">
+      <li><strong>Car Price Predictor</strong><span class="what"><span class="fr">Estime le prix d'un véhicule selon la marque, l'année, le kilométrage et le moteur.</span><span class="en">Estimates a vehicle's price from brand, year, mileage and engine specs.</span></span><span class="stack">scikit-learn · Streamlit</span></li>
+      <li><strong>House Price Estimator</strong><span class="what"><span class="fr">Évaluation immobilière par régression multiple.</span><span class="en">Real estate valuation using multiple regression features.</span></span><span class="stack">Streamlit</span></li>
+      <li><strong>Sentiment Analysis App</strong><span class="what"><span class="fr">Classe un texte en positif, négatif ou neutre.</span><span class="en">Classifies text as positive, negative or neutral.</span></span><span class="stack">Transformers · Streamlit</span></li>
+      <li><strong>MNIST Digit Recognizer</strong><span class="what"><span class="fr">Reconnaît des chiffres manuscrits en temps réel avec un CNN.</span><span class="en">Recognizes handwritten digits in real time with a CNN.</span></span><span class="stack">TensorFlow · Streamlit</span></li>
+      <li><strong>Diabetes Prediction Tool</strong><span class="what"><span class="fr">Aide au dépistage : estime le risque de diabète à partir d'indicateurs de santé.</span><span class="en">Screening assistant estimating diabetes risk from health indicators.</span></span><span class="stack">scikit-learn · Streamlit</span></li>
+      <li><strong>Titanic Survival Predictor</strong><span class="what"><span class="fr">Probabilité de survie d'un passager selon son profil et son billet.</span><span class="en">Passenger survival probability from demographic and ticket features.</span></span><span class="stack">Classification</span></li>
+      <li><strong>Iris Flower Classifier</strong><span class="what"><span class="fr">Démo de classification multi-classes avec paramètres ajustables.</span><span class="en">Multi-class classification demo with adjustable inputs.</span></span><span class="stack">Classification</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec" id="parcours">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><span class="fr">Parcours</span><span class="en">Experience</span></h2>
+      <p class="label"><span class="fr">Expérience et formation</span><span class="en">Work and education</span></p>
+    </div>
+    <ol class="timeline">
+      <li>
+        <p class="when mono"><span class="fr">Mai 2026 – aujourd'hui</span><span class="en">May 2026 – present</span></p>
+        <div class="role">
+          <h3><span class="fr">Fondateur</span><span class="en">Founder</span> · <em>NOVI Ecosystem</em></h3>
+          <p class="meta"><span class="fr">Temps plein · Casablanca · Hybride</span><span class="en">Full-time · Casablanca · Hybrid</span></p>
+          <p class="sum">
+            <span class="fr">Organisation à impact social dédiée à la littératie en IA, à la sensibilisation aux technologies émergentes et aux défis structurels de l'Afrique, abordés par l'innovation technologique.</span>
+            <span class="en">A social-impact organization dedicated to AI literacy, awareness of emerging technologies and Africa's structural challenges, addressed through technological innovation.</span>
+          </p>
+          <ul>
+            <li><span class="fr">Direction stratégique de l'organisation et alignement des projets sur sa mission.</span><span class="en">Lead the strategic direction and keep projects aligned with the mission.</span></li>
+            <li><span class="fr">Développement de trois piliers : NOVI Digital, NOVI Field et NOVI Impact.</span><span class="en">Drive three strategic pillars: NOVI Digital, NOVI Field and NOVI Impact.</span></li>
+            <li><span class="fr">Inclusion numérique par des formations pratiques, des actions de sensibilisation et des solutions aux défis locaux.</span><span class="en">Promote digital inclusion through practical learning, awareness initiatives and solutions to local challenges.</span></li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <p class="when mono"><span class="fr">Juin – oct. 2026</span><span class="en">Jun – Oct 2026</span></p>
+        <div class="role">
+          <h3>Event Ambassador · <em>DeepLearning.AI</em></h3>
+          <p class="meta"><span class="fr">Temps partiel · Hybride</span><span class="en">Part-time · Hybrid</span></p>
+          <ul>
+            <li><span class="fr">Organisation et animation des meetups Pie &amp; AI: Casablanca, comme hôte et speaker.</span><span class="en">Organized and hosted the Pie &amp; AI: Casablanca meetups, as host and speaker.</span></li>
+            <li><span class="fr">Modération d'une session communautaire sur les agents autonomes et les technologies d'IA émergentes.</span><span class="en">Moderated a community session on autonomous agents and emerging AI technologies.</span></li>
+            <li><span class="fr">Renforcement des liens entre praticiens de l'IA et communautés tech en Afrique.</span><span class="en">Helped strengthen connections between AI practitioners and tech communities across Africa.</span></li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <p class="when mono"><span class="fr">Sept. 2025</span><span class="en">Sep 2025</span></p>
+        <div class="role">
+          <h3><span class="fr">Stagiaire</span><span class="en">Intern</span> · <em>Veloxys</em></h3>
+          <p class="meta">Casablanca</p>
+          <ul>
+            <li><span class="fr">Contribution au développement d'une plateforme digitale au sein d'une équipe professionnelle.</span><span class="en">Contributed to the development of a digital platform within a professional team.</span></li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <p class="when mono"><span class="fr">Févr. – mars 2025</span><span class="en">Feb – Mar 2025</span></p>
+        <div class="role">
+          <h3><span class="fr">Développeur web</span><span class="en">Web Developer</span> · <em>CodeXperience, SUP'RH</em></h3>
+          <p class="meta">Casablanca</p>
+          <p class="sum">
+            <span class="fr">Conception et déploiement d'un chatbot pour les étudiants : emplois du temps, inscriptions, examens, bibliothèque et contacts des enseignants.</span>
+            <span class="en">Designed and deployed a student-facing chatbot covering schedules, enrollment, exams, library services and faculty contacts.</span>
+          </p>
+          <ul>
+            <li><span class="fr">Méthodes agiles et technologies web pour une livraison itérative.</span><span class="en">Agile methods and web technologies for iterative delivery.</span></li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <p class="when mono">2024 – 2027</p>
+        <div class="role">
+          <h3><span class="fr">Bachelor en Intelligence Artificielle</span><span class="en">Bachelor in Artificial Intelligence</span> · <em>SUP'RH School of AI</em></h3>
+          <p class="meta"><span class="fr">En cours · Casablanca</span><span class="en">In progress · Casablanca</span></p>
+          <p class="sum" style="color:var(--muted);font-size:.9688rem">
+            <span class="fr">Probabilités, statistiques, algorithmique, machine learning, deep learning, NLP, Big Data &amp; BI, IoT &amp; robotique, e-business, IA pour les RH.</span>
+            <span class="en">Probability, statistics, algorithmics, machine learning, deep learning, NLP, Big Data &amp; BI, IoT &amp; robotics, e-business, AI for HR.</span>
+          </p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec alt" id="evenements">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><span class="fr">Événements</span><span class="en">Events</span></h2>
+      <p class="label"><span class="fr">Meetups DeepLearning.AI organisés à Casablanca</span><span class="en">DeepLearning.AI meetups organized in Casablanca</span></p>
+    </div>
+    <div class="events">
+      <article class="event">
+        <div class="band"><span>Pie &amp; AI: Casablanca</span><span><span class="fr">1 août 2026 · 18h – 20h (GMT+1)</span><span class="en">Aug 1, 2026 · 6 – 8 PM (GMT+1)</span></span></div>
+        <div class="body">
+          <h3>AI &amp; Autonomous Agents: The New Growth Engine for African Entrepreneurs</h3>
+          <p>
+            <span class="fr">Meetup communautaire DeepLearning.AI, accueilli par NOVI Ecosystem, sur les agents autonomes comme moteur de croissance pour les entrepreneurs africains.</span>
+            <span class="en">A DeepLearning.AI community meetup hosted by NOVI Ecosystem, on autonomous agents as a growth engine for African entrepreneurs.</span>
+          </p>
+          <dl>
+            <div><dt><span class="fr">Rôle</span><span class="en">Role</span></dt><dd><span class="fr">Organisateur (DeepLearning.AI Event Ambassador) et speaker. Certificat de reconnaissance DeepLearning.AI.</span><span class="en">Organizer (DeepLearning.AI Event Ambassador) and speaker. DeepLearning.AI Certificate of Appreciation.</span></dd></div>
+            <div><dt>Format</dt><dd><span class="fr">En ligne</span><span class="en">Online</span></dd></div>
+            <div><dt><span class="fr">Invité</span><span class="en">Guest</span></dt><dd><span class="fr">Fred Kaseya, développeur d'agents IA et spécialiste en automatisation intelligente.</span><span class="en">Fred Kaseya, AI agent developer and intelligent automation specialist.</span></dd></div>
+          </dl>
+        </div>
+      </article>
+      <article class="event">
+        <div class="band"><span>Pie &amp; AI: Casablanca</span><span>Keynote</span></div>
+        <div class="body">
+          <h3>L'IA au service de l'écologie et du développement accéléré de l'Afrique</h3>
+          <p>
+            <span class="fr">Keynote sur le saut technologique vert : comment l'IA et les technologies vertes permettent à l'Afrique de dépasser les infrastructures du passé, de la protection de la biodiversité à l'agriculture de précision, la gestion de l'eau et les réseaux énergétiques intelligents.</span>
+            <span class="en">A keynote on green leapfrogging: how AI and green technologies let Africa skip past legacy infrastructure, from biodiversity protection to precision agriculture, water management and smart energy grids.</span>
+          </p>
+          <dl>
+            <div><dt><span class="fr">Rôle</span><span class="en">Role</span></dt><dd><span class="fr">Hôte de l'événement et keynote speaker.</span><span class="en">Event host and keynote speaker.</span></dd></div>
+            <div><dt><span class="fr">Invités</span><span class="en">Guests</span></dt><dd><span class="fr">Gilchris Houekpo Dannon, co-fondateur de Benin AI Community (BAIC), et Bernardin Ligan, UM6P Vanguard Center.</span><span class="en">Gilchris Houekpo Dannon, co-founder of Benin AI Community (BAIC), and Bernardin Ligan, UM6P Vanguard Center.</span></dd></div>
+          </dl>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="competences">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><span class="fr">Compétences</span><span class="en">Skills</span></h2>
+      <p class="label"><span class="fr">Outils et techniques</span><span class="en">Tools and techniques</span></p>
+    </div>
+    <dl class="skills">
+      <div><dt><span class="fr">Langages</span><span class="en">Languages</span></dt><dd>Python, C, SQL, R, HTML, TypeScript</dd></div>
+      <div><dt>ML / DL</dt><dd>PyTorch, TensorFlow, scikit-learn, Transformers (Hugging Face)</dd></div>
+      <div><dt><span class="fr">Techniques</span><span class="en">Techniques</span></dt><dd><span class="fr">Régression, classification, deep learning, NLP, conception d'applications LLM, architecture d'agents, prompt engineering, RAG</span><span class="en">Regression, classification, deep learning, NLP, LLM application design, AI agent architecture, prompt engineering, RAG</span></dd></div>
+      <div><dt>Data &amp; viz</dt><dd>Pandas, NumPy, Matplotlib, Recharts, Power BI, Dataiku, Jupyter, MATLAB</dd></div>
+      <div><dt><span class="fr">Déploiement</span><span class="en">Deployment</span></dt><dd>Streamlit, FastAPI, Docker, Docker Compose, Git, GitHub, Hugging Face Spaces, MLOps</dd></div>
+      <div><dt>Backend</dt><dd>PostgreSQL, Redis, MySQL, REST API design</dd></div>
+      <div><dt>Frontend</dt><dd>React, TailwindCSS, Three.js</dd></div>
+      <div><dt><span class="fr">Observabilité</span><span class="en">Observability</span></dt><dd><span class="fr">Arize AI, optimisation GPU pour l'inférence, monitoring de modèles</span><span class="en">Arize AI, GPU optimization for inference, model monitoring</span></dd></div>
+      <div><dt>Big Data &amp; BI</dt><dd>SAS, IBM SPSS Statistics, Business Intelligence</dd></div>
+      <div><dt>IoT</dt><dd><span class="fr">Arduino, conception de systèmes IoT, intégration de capteurs</span><span class="en">Arduino, IoT system design, sensor integration</span></dd></div>
+      <div><dt><span class="fr">Automatisation</span><span class="en">Automation</span></dt><dd>UiPath Automation Ops</dd></div>
+      <div><dt><span class="fr">Mathématiques</span><span class="en">Mathematics</span></dt><dd><span class="fr">Statistiques, mathématiques appliquées, pensée algorithmique, calcul numérique</span><span class="en">Statistics, applied mathematics, algorithmic thinking, numerical computing</span></dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="sec alt" id="certifications">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Certifications</h2>
+      <p class="label"><span class="fr">24 certifications · liens de vérification ↗</span><span class="en">24 certifications · verification links ↗</span></p>
+    </div>
+    <ul class="certs">
+      <li><time>08/2026</time><a class="n" href="https://www.deeplearning.ai/certificates/ad6b270b-811b-4f06-9a81-274ac7cb3d18" target="_blank" rel="noopener">Agentic AI</a><span class="o">DeepLearning.AI</span></li>
+      <li><time>08/2026</time><a class="n" href="https://www.deeplearning.ai/certificates/dfc9bef1-646b-40fa-8999-09050c590227" target="_blank" rel="noopener">Machine Learning in Production</a><span class="o">DeepLearning.AI</span></li>
+      <li><time>08/2026</time><a class="n" href="https://learn.deeplearning.ai/certificates/5d1ce9a2-eba7-4cdd-a70b-25eb1f6f74e0" target="_blank" rel="noopener">AI for Medicine</a><span class="o">DeepLearning.AI · Professional Certificate</span></li>
+      <li><time>08/2026</time><a class="n" href="https://learn.deeplearning.ai/certificates/2fab714e-6ed0-4a88-9a29-188eb7b149b9" target="_blank" rel="noopener">AI For Medical Treatment</a><span class="o">DeepLearning.AI</span></li>
+      <li><time>08/2026</time><a class="n" href="https://learn.deeplearning.ai/certificates/ee111efe-fd4b-41dd-acfd-5d78e539df88" target="_blank" rel="noopener">AI for Medical Prognosis</a><span class="o">DeepLearning.AI</span></li>
+      <li><time>08/2026</time><a class="n" href="https://learn.deeplearning.ai/certificates/62c45e3c-743c-4154-84e3-16b6d4060601" target="_blank" rel="noopener">AI for Medical Diagnosis</a><span class="o">DeepLearning.AI</span></li>
+      <li><time>08/2026</time><a class="n" href="https://learn.deeplearning.ai/certificates/5674c346-a157-4d43-b539-5fc15693787a" target="_blank" rel="noopener">AI Prompting for Everyone</a><span class="o">DeepLearning.AI</span></li>
+      <li><time>08/2026</time><a class="n" href="https://learn.deeplearning.ai/certificates/c3c1a0bc-4033-4de7-b2b6-227fbc6711b6" target="_blank" rel="noopener">Retrieval Augmented Generation (RAG)</a><span class="o">DeepLearning.AI</span></li>
+      <li><time>07/2026</time><a class="n" href="https://learn.deeplearning.ai/certificates/77806723-de16-4c1b-a611-c040d342e8ce" target="_blank" rel="noopener">Transformers in Practice</a><span class="o">DeepLearning.AI</span></li>
+      <li><time>07/2026</time><span class="n">Get Started with Generative AI and Agents in Azure</span><span class="o">Microsoft</span></li>
+      <li><time>02/2026</time><span class="n">Dataiku Generative AI Practitioner</span><span class="o">Dataiku</span></li>
+      <li><time>02/2026</time><span class="n">Dataiku Core Designer</span><span class="o">Dataiku</span></li>
+      <li><time>02/2026</time><span class="n">UiPath Automation Ops (v2024.10)</span><span class="o">UiPath</span></li>
+      <li><time>01/2026</time><span class="n">Nvidia NeMo Agent Toolkit: Making Agents Reliable</span><span class="o">DeepLearning.AI</span></li>
+      <li><time>01/2026</time><span class="n">AI Agents Mastery: From Architecture to Optimization</span><span class="o">Arize University</span></li>
+      <li><time>12/2025</time><span class="n">Google Ads Search Network Certification</span><span class="o">Google</span></li>
+      <li><time>10/2025</time><span class="n">Become an AI &amp; Machine Learning Specialist</span><span class="o">LinkedIn</span></li>
+      <li><time>10/2025</time><span class="n">AI Security &amp; Governance</span><span class="o">Securiti · 1.5 CPE</span></li>
+      <li><time>10/2025</time><span class="n">Data Analysis with Python</span><span class="o">freeCodeCamp</span></li>
+      <li><time>09/2025</time><span class="n">Getting Started with Machine Learning Algorithms</span><span class="o">Simplilearn SkillUp</span></li>
+      <li><time>09/2025</time><span class="n">Scientific Computing with Python</span><span class="o">freeCodeCamp</span></li>
+      <li><time>09/2025</time><span class="n">MATLAB Onramp (96 %)</span><span class="o">MathWorks</span></li>
+      <li><time>03/2025</time><span class="n">CodeXperience Certificate (Chatbot Project)</span><span class="o">SUP'RH</span></li>
+      <li><time>01/2025</time><span class="n">Building Coding Agents with Tool Execution</span><span class="o">DeepLearning.AI</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <p class="label">Contact</p>
+    <h2><span class="fr">Un projet IA à construire ? Parlons-en.</span><span class="en">Have an AI project to build? Let's talk.</span></h2>
+    <div class="mailrow">
+      <span class="mail" id="mail">e.ntedika@suprh.com</span>
+      <button class="copy" id="copy-mail" type="button"><span class="fr">Copier</span><span class="en">Copy</span></button>
+    </div>
+    <div class="cta" style="margin-top:0">
+      <a class="btn" href="https://www.linkedin.com/in/elnovic-ntedika/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/elnovic" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <p class="where mono"><span class="fr">Sidi Marouf, Casablanca, Maroc · Disponible en freelance IA &amp; Data</span><span class="en">Sidi Marouf, Casablanca, Morocco · Available for AI &amp; Data freelance work</span></p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap mono">
+    <span>© 2026 Elnovic Ntedika Tsoni-Malonda</span>
+    <span><span class="fr">Centres d'intérêt : systèmes multi-agents, IA et musique, IoT, IA pour la santé</span><span class="en">Interests: multi-agent systems, AI and music, IoT, AI for healthcare</span></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('lang-toggle');
+  function setLang(l){
+    if(l==='en'){root.setAttribute('data-lang','en');root.lang='en';btn.textContent='FR';}
+    else{root.removeAttribute('data-lang');root.lang='fr';btn.textContent='EN';}
+    try{localStorage.setItem('lang',l);}catch(e){}
+  }
+  var saved=null; try{saved=localStorage.getItem('lang');}catch(e){}
+  setLang(saved==='en'?'en':'fr');
+  btn.addEventListener('click',function(){setLang(root.getAttribute('data-lang')==='en'?'fr':'en');});
+
+  var copy=document.getElementById('copy-mail'), mail=document.getElementById('mail'), original=copy.innerHTML;
+  function selectMail(){var r=document.createRange();r.selectNodeContents(mail);var s=window.getSelection();s.removeAllRanges();s.addRange(r);}
+  copy.addEventListener('click',function(){
+    var done=function(){copy.innerHTML='<span class="fr">Copié</span><span class="en">Copied</span>';setTimeout(function(){copy.innerHTML=original;},1800);};
+    try{navigator.clipboard.writeText(mail.textContent).then(done,selectMail);}catch(e){selectMail();}
+  });
+})();
+</script>
+</body>
+</html>
